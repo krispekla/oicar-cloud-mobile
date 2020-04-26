@@ -23,7 +23,7 @@ in root directory install packages with
 npm install
 
 # 4
-
+run project with:
 expo start
 
 # 5

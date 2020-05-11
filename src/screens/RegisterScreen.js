@@ -13,6 +13,40 @@ const RegisterScreen = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  const register = async () => {
+    if (!firstName || !lastName || !email || !password) {
+      alert("Please fill all fields");
+    } else {
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        }),
+      };
+
+      const response = await fetch(
+        "http://10.0.2.2:8014/api/user/register",
+        config
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        data.userId !== undefined
+          ? props.navigation.navigate({ routeName: "Calculator" })
+          : alert("Registration failed");
+      } else {
+        alert(response.statusText);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Cloud Calculator</Text>
@@ -53,8 +87,8 @@ const RegisterScreen = (props) => {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
+      <TouchableOpacity style={styles.loginBtn} onPress={register}>
+        <Text style={styles.loginText}>REGISTER</Text>
       </TouchableOpacity>
       <TouchableOpacity>
         <Text

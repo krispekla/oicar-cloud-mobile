@@ -6,52 +6,35 @@ import { colors } from '../constants/colors';
 import FormInput from '../components/FormInput/FormInput';
 import CustomButton from '../components/CustomButton/CustomButton';
 
-const FunctionScreen = () => {
-	const [executinRequest, setExecutinRequest] = useState(null);
-	const [memory, setMemory] = useState(null);
-	const [executionPerMonth, setExecutionPerMonth] = useState(null);
+const StorageScreen = () => {
+	const [totalAmount, setTotalAmount] = useState(null);
+	const [readPerMonth, setReadPerMonth] = useState(null);
+	const [writePerMonth, setWritePerMonth] = useState(null);
 
-	const handlePress = async () => {
-		try {
-			const data = new FormData();
-
-			data.append('file', {
-				ExecutinPerRequestInMiliseconds: executinRequest,
-				MemorySizeInMB: memory,
-				ExecutionsPerMonth: executionPerMonth,
-			});
-
-			fetch(`${baseUrl}/calcualtor`, {
-				method: 'GET',
-			});
-		} catch (err) {
-			console.log(err);
-			console.log('Status ', err.status);
-		}
-	};
+	const handlePress = async () => {};
 
 	return (
 		<View style={styles.screen}>
 			<Text style={styles.title}>Compare Function Prices</Text>
 			<View style={styles.container}>
 				<FormInput
-					placeholder="Executin Per Request (ms)"
-					value={executinRequest}
-					change={setExecutinRequest}
+					placeholder="Total Amount"
+					value={totalAmount}
+					change={setTotalAmount}
 					keyboardType="number-pad"
 				/>
 
 				<FormInput
-					placeholder="Memory Size (MB)"
-					value={memory}
-					change={setMemory}
+					placeholder="Read Operations Per Month"
+					value={readPerMonth}
+					change={setReadPerMonth}
 					keyboardType="number-pad"
 				/>
 
 				<FormInput
 					placeholder="Executions/month"
-					value={executionPerMonth}
-					change={setExecutionPerMonth}
+					value={writePerMonth}
+					change={setWritePerMonth}
 					keyboardType="number-pad"
 				/>
 
@@ -81,4 +64,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default FunctionScreen;
+export default StorageScreen;

@@ -1,54 +1,28 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 
-const CalculatorScreen = (props) => {
-  return (
-    <View style={styles.screen}>
-      <TouchableOpacity
-        style={styles.category}
-        onPress={() => props.navigation.navigate({ routeName: "Function" })}
-      >
-        <Text style={styles.text}>Functions</Text>
-      </TouchableOpacity>
+import { colors } from '../constants/colors';
 
-      <TouchableOpacity
-        style={styles.category}
-        onPress={() => props.navigation.navigate({ routeName: "VM" })}
-      >
-        <Text style={styles.text}>Virtual Machines</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.category}
-        onPress={() => props.navigation.navigate({ routeName: "SQL" })}
-      >
-        <Text style={styles.text}>SQL</Text>
-      </TouchableOpacity>
-    </View>
-  );
+import CloudCategory from '../components/CloudCategory/CloudCategory';
+
+const CalculatorScreen = props => {
+	return (
+		<View style={styles.screen}>
+			<CloudCategory category="Function" title="Cloud Functions" {...props} />
+			<CloudCategory category="VM" title="Cloud VM" {...props} />
+			<CloudCategory category="SQL" title="Cloud Databases SQL" {...props} />
+			<CloudCategory category="Storage" title="Cloud Storage" {...props} />
+		</View>
+	);
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    height: "100%",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#003f5c",
-  },
-  category: {
-    backgroundColor: "blue",
-    flexDirection: "row",
-    flexGrow: 1,
-    width: "90%",
-    margin: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fb5b5a",
-  },
-  text: {
-    fontSize: 20,
-    color: "#ffffff",
-  },
+	screen: {
+		flex: 1,
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		backgroundColor: colors.blue,
+	},
 });
 
 export default CalculatorScreen;

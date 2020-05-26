@@ -8,6 +8,7 @@ import { ButtonGroup } from 'react-native-elements';
 
 import FormInput from '../components/FormInput/FormInput';
 import CustomButton from '../components/CustomButton/CustomButton';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 const SqlScreen = () => {
 	const [instance, setInstance] = useState();
@@ -17,20 +18,47 @@ const SqlScreen = () => {
 	const [averageHoursPerDay, setAverageHoursPerDay] = useState();
 	const [averageDaysPerWeek, setAverageDaysPerWeek] = useState();
 	const [sqlServerType, setSqlServerType] = useState();
+	const [calculateResult, setCalculateResult] = useState();
 
 	const handlePress = async () => {
+		if (
+			ram === null ||
+			cpuCores === null ||
+			backupSize === null ||
+			averageHoursPerDay === null ||
+			averageDaysPerWeek === null ||
+			sqlServerType === null
+		) {
+			alert('Populate all fields');
+			return;
+		}
+
 		try {
 			const data = new FormData();
-
 			data.append('file', {
-				ExecutinPerRequestInMiliseconds: executinRequest,
-				MemorySizeInMB: memory,
-				ExecutionsPerMonth: executionPerMonth,
+				ram: ram,
+				cpuCores: cpuCores,
+				backupSize: backupSize,
+				averageHoursPerDay: averageHoursPerDay,
+				averageDaysPerWeek: averageDaysPerWeek,
+				sqlServerType: sqlServerType,
 			});
 
-			fetch(`${baseUrl}/calcualtor`, {
-				method: 'GET',
+			const response = await fetch(`${baseUrl}/calculator/dbSQL`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+				body: data,
 			});
+
+			if (!response.ok) {
+				alert('Something went wrong!');
+				return;
+			}
+			const responseJson = await response.json();
+
+			setCalculateResult(responseJson);
 		} catch (err) {
 			console.log(err);
 			console.log('Status ', err.status);
@@ -83,13 +111,14 @@ const SqlScreen = () => {
 					keyboardType="number-pad"
 				/>
 
-				<ButtonGroup
-					buttons={SQL_SERVER_TYPE}
-					buttonStyle={styles.button}
-					selectedIndex={sqlServerType}
-					innerBorderStyle={styles.inner}
-					onPress={e => setSqlServerType(e)}
-					containerStyle={styles.containerButton}
+				<ModalDropdown
+					options={[
+						SQL_SERVER_TYPE.standard,
+						SQL_SERVER_TYPE.enterprise,
+						SQL_SERVER_TYPE.express,
+						SQL_SERVER_TYPE.web,
+					]}
+					onSelect={item => setSqlServerType(item)}
 				/>
 
 				<CustomButton text="Run Calculation" press={handlePress} />
@@ -123,6 +152,11 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		margin: 5,
+	},
+	dropdown: {
+		height: 40,
+		width: '80%',
+		zIndex: 10,
 	},
 });
 

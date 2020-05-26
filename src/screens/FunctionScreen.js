@@ -10,20 +10,42 @@ const FunctionScreen = () => {
 	const [executinRequest, setExecutinRequest] = useState(null);
 	const [memory, setMemory] = useState(null);
 	const [executionPerMonth, setExecutionPerMonth] = useState(null);
+	const [calculateResult, setCalculateResult] = useState(null);
 
 	const handlePress = async () => {
+		if (
+			executinRequest === null ||
+			memory === null ||
+			executionPerMonth === null
+		) {
+			alert('Populate all fields');
+			return;
+		}
+
 		try {
 			const data = new FormData();
 
 			data.append('file', {
-				ExecutinPerRequestInMiliseconds: executinRequest,
-				MemorySizeInMB: memory,
-				ExecutionsPerMonth: executionPerMonth,
+				memory: memory,
+				executinRequest: executinRequest,
+				executionPerMonth: executionPerMonth,
 			});
 
-			fetch(`${baseUrl}/calcualtor`, {
-				method: 'GET',
+			const response = await fetch(`${baseUrl}/catlculator/functions`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+				body: data,
 			});
+
+			if (!response.ok) {
+				alert('Something went wrong!');
+				return;
+			}
+			const responseJson = await response.json();
+
+			setCalculateResult(responseJson);
 		} catch (err) {
 			console.log(err);
 			console.log('Status ', err.status);

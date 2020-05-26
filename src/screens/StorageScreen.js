@@ -10,8 +10,46 @@ const StorageScreen = () => {
 	const [totalAmount, setTotalAmount] = useState(null);
 	const [readPerMonth, setReadPerMonth] = useState(null);
 	const [writePerMonth, setWritePerMonth] = useState(null);
+	const [calculateResult, setCalculateResult] = useState();
 
-	const handlePress = async () => {};
+	const handlePress = async () => {
+		if (
+			totalAmount === null ||
+			readPerMonth === null ||
+			writePerMonth === null
+		) {
+			alert('Populate all fields');
+			return;
+		}
+
+		try {
+			const data = new FormData();
+			data.append('file', {
+				readPerMonth: readPerMonth,
+				writePerMonth: writePerMonth,
+				totalAmount: totalAmount,
+			});
+
+			const response = await fetch(`${baseUrl}/calculator/storage`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+				body: data,
+			});
+
+			if (!response.ok) {
+				alert('Something went wrong!');
+				return;
+			}
+			const responseJson = await response.json();
+
+			setCalculateResult(responseJson);
+		} catch (err) {
+			console.log(err);
+			console.log('Status ', err.status);
+		}
+	};
 
 	return (
 		<View style={styles.screen}>

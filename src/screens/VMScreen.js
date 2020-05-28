@@ -44,7 +44,7 @@ const VMScreen = () => {
 			const response = await fetch(`${baseUrl}/catlculator/vm`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'multipart/form-data',
+					'Content-Type': 'application/json',
 				},
 				body: data,
 			});

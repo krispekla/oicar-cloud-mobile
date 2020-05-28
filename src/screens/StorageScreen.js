@@ -33,7 +33,7 @@ const StorageScreen = () => {
 			const response = await fetch(`${baseUrl}/calculator/storage`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'multipart/form-data',
+					'Content-Type': 'application/json',
 				},
 				body: data,
 			});

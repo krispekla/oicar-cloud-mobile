@@ -31,10 +31,10 @@ const FunctionScreen = () => {
 				executionPerMonth: executionPerMonth,
 			});
 
-			const response = await fetch(`${baseUrl}/catlculator/functions`, {
+			const response = await fetch(`${baseUrl}/calculator/functions`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'multipart/form-data',
+					'Content-Type': 'application/json',
 				},
 				body: data,
 			});

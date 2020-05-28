@@ -47,7 +47,7 @@ const SqlScreen = () => {
 			const response = await fetch(`${baseUrl}/calculator/dbSQL`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'multipart/form-data',
+					'Content-Type': 'application/json',
 				},
 				body: data,
 			});

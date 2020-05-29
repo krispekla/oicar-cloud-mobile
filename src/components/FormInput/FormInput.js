@@ -17,6 +17,7 @@ const FormInput = ({
 			placeholderText="#003f5c"
 			value={value}
 			{...otherProps}
+			returnKeyType="done"
 		/>
 	</View>
 );

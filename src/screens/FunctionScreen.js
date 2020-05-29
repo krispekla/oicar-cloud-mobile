@@ -1,105 +1,95 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { baseUrl } from '../constants/api';
 import { colors } from '../constants/colors';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { Input, Button } from 'react-native-elements';
+import { checkInteger, checkDoubles } from '../constants/checkInputValues';
 
-import FormInput from '../components/FormInput/FormInput';
-import CustomButton from '../components/CustomButton/CustomButton';
+const FunctionScreen = props => {
+	const [
+		executinPerRequestInMiliseconds,
+		setExecutinPerRequestInMiliseconds,
+	] = useState('');
+	const [memorySizeInMB, setMemorySizeInMB] = useState('');
+	const [executionsPerMonth, setExecutionsPerMonth] = useState('');
 
-const FunctionScreen = () => {
-	const [executinRequest, setExecutinRequest] = useState(null);
-	const [memory, setMemory] = useState(null);
-	const [executionPerMonth, setExecutionPerMonth] = useState(null);
-	const [calculateResult, setCalculateResult] = useState(null);
-
-	const handlePress = async () => {
+	const checkNumbers = () => {
 		if (
-			executinRequest === null ||
-			memory === null ||
-			executionPerMonth === null
+			checkInteger.test(executinPerRequestInMiliseconds) &&
+			checkInteger.test(memorySizeInMB) &&
+			checkDoubles.test(executionsPerMonth)
 		) {
-			alert('Populate all fields');
-			return;
-		}
-
-		try {
-			const data = new FormData();
-
-			data.append('file', {
-				memory: memory,
-				executinRequest: executinRequest,
-				executionPerMonth: executionPerMonth,
-			});
-
-			const response = await fetch(`${baseUrl}/calculator/functions`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: data,
-			});
-
-			if (!response.ok) {
-				alert('Something went wrong!');
-				return;
-			}
-			const responseJson = await response.json();
-
-			setCalculateResult(responseJson);
-		} catch (err) {
-			console.log(err);
-			console.log('Status ', err.status);
+			console.log('All clear');
 		}
 	};
 
 	return (
 		<View style={styles.screen}>
-			<Text style={styles.title}>Compare Function Prices</Text>
-			<View style={styles.container}>
-				<FormInput
-					placeholder="Executin Per Request (ms)"
-					value={executinRequest}
-					change={setExecutinRequest}
-					keyboardType="number-pad"
-				/>
+			<MaterialCommunityIcons name="function" size={72} color="black" />
+			<Text>The Function Screen!</Text>
+			<Input
+				placeholder="requests (ms)"
+				label="Executin per Request (ms)"
+				leftIcon={{
+					type: 'font-awesome',
+					name: 'info',
+					color: colors.primaryColor,
+				}}
+				keyboardType="number-pad"
+				returnKeyType="done"
+				value={executinPerRequestInMiliseconds}
+				onChangeText={value => setExecutinPerRequestInMiliseconds(value)}
+			/>
+			<Input
+				placeholder="memory (mb)"
+				label="Memory Size (mb)"
+				leftIcon={{
+					type: 'font-awesome',
+					name: 'info',
+					color: colors.primaryColor,
+				}}
+				keyboardType="number-pad"
+				returnKeyType="done"
+				value={memorySizeInMB}
+				onChangeText={value => setMemorySizeInMB(value)}
+			/>
 
-				<FormInput
-					placeholder="Memory Size (MB)"
-					value={memory}
-					change={setMemory}
-					keyboardType="number-pad"
-				/>
+			<Input
+				placeholder="execution (months)"
+				label="Execution per Month"
+				leftIcon={{
+					type: 'font-awesome',
+					name: 'info',
+					color: colors.primaryColor,
+				}}
+				keyboardType="decimal-pad"
+				returnKeyType="done"
+				value={executionsPerMonth}
+				onChangeText={value => setExecutionsPerMonth(value)}
+			/>
 
-				<FormInput
-					placeholder="Executions/month"
-					value={executionPerMonth}
-					change={setExecutionPerMonth}
-					keyboardType="number-pad"
-				/>
-
-				<CustomButton text="Run Calculation" press={handlePress} />
-			</View>
+			<Button
+				style={{ width: 250 }}
+				icon={<Ionicons name="ios-bonfire" size={24} color="white" />}
+				title="Calculate"
+				onPress={checkNumbers}
+			/>
 		</View>
 	);
+};
+
+FunctionScreen.navigationOptions = {
+	headerStyle: {
+		backgroundColor: colors.primaryColor,
+	},
+	headerTintColor: 'white',
 };
 
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		backgroundColor: colors.blue,
-		alignItems: 'center',
 		justifyContent: 'center',
-	},
-	title: {
-		color: colors.white,
-		fontSize: 28,
-		textAlign: 'center',
-	},
-	container: {
-		display: 'flex',
 		alignItems: 'center',
-		width: '100%',
-		margin: '20%',
 	},
 });
 

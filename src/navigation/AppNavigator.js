@@ -30,6 +30,12 @@ import FindDbSQLById from '../screens/DbSQL/FindDbSQLById';
 import CreateDbSQL from '../screens/DbSQL/CreateDbSQL';
 import UpdateDbSQL from '../screens/DbSQL/UpdateDbSQL';
 
+//VM
+import GetAllVM from '../screens/VM/GetAllVM';
+import FindVMById from '../screens/VM/FindVMById';
+import CreateVM from '../screens/VM/CreateVM';
+import UpdateVM from '../screens/VM/UpdateVM';
+
 import { colors } from '../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -72,10 +78,23 @@ const CloudDbSQLNavigator = createStackNavigator(
 	}
 );
 
+const CloudVMNavigator = createStackNavigator(
+	{
+		VM: VMScreen,
+		GetAll: GetAllVM,
+		FindById: FindVMById,
+		Create: CreateVM,
+		Update: UpdateVM,
+	},
+	{
+		headerMode: 'none',
+	}
+);
+
 const CategoriesNavigator = createStackNavigator({
 	Categories: CategoriesScreen,
 	Function: CloudFunctionNavigator,
-	VM: VMScreen,
+	VM: CloudVMNavigator,
 	SQL: CloudDbSQLNavigator,
 	Storage: CloudStorageNavigator,
 });

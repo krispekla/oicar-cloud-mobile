@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Keyboard } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { colors } from '../../constants/colors';
-import { sqlUrl } from '../../utils/api';
+import { vmUrl } from '../../utils/api';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const CreateDbSQL = props => {
-	const [instance, setInstance] = useState('');
+const CreateVM = props => {
+	const [instanceNb, setInstanceNb] = useState('');
+	const [operatingSystem, setOperatingSystem] = useState('');
+	const [core, setCore] = useState('');
 	const [ram, setRam] = useState('');
-	const [cpuCores, setCpuCores] = useState('');
-	const [baskupSize, setBaskupSize] = useState('');
+	const [storage, setStorage] = useState('');
+	const [storageType, setStorageType] = useState('');
 	const [averageHoursPerDay, setAverageHoursPerDay] = useState('');
 	const [averageDaysPerWeek, setAverageDaysPerWeek] = useState('');
-	const [sqlServerType, setSQLServerType] = useState('');
 	const [cloudProvider, setCloudProvider] = useState('');
 	const [price, setPrice] = useState('');
 
@@ -22,19 +23,20 @@ const CreateDbSQL = props => {
 	const createCloudSQL = async () => {
 		Keyboard.dismiss();
 
-		const response = await fetch(`${sqlUrl}/add`, {
+		const response = await fetch(`${vmUrl}/add`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				instance,
+				instanceNb,
+				operatingSystem,
+				core,
 				ram,
-				cpuCores,
-				baskupSize,
+				storage,
+				storageType,
 				averageHoursPerDay,
 				averageDaysPerWeek,
-				sqlServerType,
 				cloudProvider,
 				price,
 			}),
@@ -44,13 +46,14 @@ const CreateDbSQL = props => {
 			const dataJson = await response.json();
 			setMessage(dataJson.message);
 
-			setInstance('');
+			setInstanceNb('');
+			setOperatingSystem('');
+			setCore('');
 			setRam('');
-			setCpuCores('');
-			setBaskupSize('');
+			setStorage('');
+			setStorageType('');
 			setAverageHoursPerDay('');
 			setAverageDaysPerWeek('');
-			setSQLServerType('');
 			setCloudProvider('');
 			setPrice('');
 		}
@@ -67,17 +70,35 @@ const CreateDbSQL = props => {
 				{msg}
 				<View style={{ width: '70%' }}>
 					<Input
-						placeholder="Instance"
+						placeholder="Number of Instance"
 						keyboardType="number-pad"
 						returnKeyType="done"
 						inputStyle={styles.input}
 						labelStyle={styles.label}
-						value={instance.toString()}
-						onChangeText={value => setInstance(value)}
+						value={instanceNb.toString()}
+						onChangeText={value => setInstanceNb(value)}
+					/>
+
+					<Dropdown
+						setCloud={setOperatingSystem}
+						items={[
+							{ label: 'Windows', value: '0' },
+							{ label: 'Linux', value: '1' },
+						]}
 					/>
 
 					<Input
-						placeholder="RAM"
+						placeholder="Core"
+						keyboardType="number-pad"
+						returnKeyType="done"
+						inputStyle={styles.input}
+						labelStyle={styles.label}
+						value={core.toString()}
+						onChangeText={value => setCore(value)}
+					/>
+
+					<Input
+						placeholder="Ram"
 						keyboardType="number-pad"
 						returnKeyType="done"
 						inputStyle={styles.input}
@@ -87,23 +108,21 @@ const CreateDbSQL = props => {
 					/>
 
 					<Input
-						placeholder="CPU Cores"
+						placeholder="Storage"
 						keyboardType="number-pad"
 						returnKeyType="done"
 						inputStyle={styles.input}
 						labelStyle={styles.label}
-						value={cpuCores.toString()}
-						onChangeText={value => setCpuCores(value)}
+						value={storage.toString()}
+						onChangeText={value => setStorage(value)}
 					/>
 
-					<Input
-						placeholder="Backup Size"
-						keyboardType="number-pad"
-						returnKeyType="done"
-						inputStyle={styles.input}
-						labelStyle={styles.label}
-						value={baskupSize.toString()}
-						onChangeText={value => setBaskupSize(value)}
+					<Dropdown
+						setCloud={setStorageType}
+						items={[
+							{ label: 'HDD', value: '0' },
+							{ label: 'SSD', value: '1' },
+						]}
 					/>
 
 					<Input
@@ -127,16 +146,6 @@ const CreateDbSQL = props => {
 					/>
 
 					<Dropdown
-						setCloud={setSQLServerType}
-						items={[
-							{ label: 'Standard2017', value: '0' },
-							{ label: 'Enterprise2017', value: '1' },
-							{ label: 'Express2017', value: '2' },
-							{ label: 'Web2017', value: '3' },
-						]}
-					/>
-
-					<Dropdown
 						setCloud={setCloudProvider}
 						items={[
 							{ label: 'AWS', value: '0' },
@@ -156,7 +165,7 @@ const CreateDbSQL = props => {
 					/>
 
 					<Button
-						title="Create SQL"
+						title="Create VM"
 						buttonStyle={styles.button}
 						onPress={createCloudSQL}
 					/>
@@ -194,4 +203,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default CreateDbSQL;
+export default CreateVM;

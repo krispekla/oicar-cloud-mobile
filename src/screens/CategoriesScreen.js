@@ -30,14 +30,6 @@ const CategoriesScreen = props => {
 	);
 };
 
-CategoriesScreen.navigationOptions = {
-	headerTitle: 'Cloud Calculator Categories',
-	headerStyle: {
-		backgroundColor: colors.primaryColor,
-	},
-	headerTintColor: 'white',
-};
-
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,

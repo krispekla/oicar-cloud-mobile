@@ -14,3 +14,9 @@ export const STORAGE_TYPE = {
 	hdd: 'HDD',
 	ssd: 'SSD',
 };
+
+export const CLOUD_PROVIDER = {
+	aws: 'AWS',
+	azure: 'AZURE',
+	gcloud: 'GCLOUD',
+};

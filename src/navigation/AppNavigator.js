@@ -11,16 +11,73 @@ import VMScreen from '../screens/VMScreen';
 import SqlScreen from '../screens/SqlScreen';
 import StorageScreen from '../screens/StorageScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
-import { colors } from '../constants/colors';
 
+//Functions
+import GetAllFunctions from '../screens/Function/GetAllFunction';
+import FindFunctionById from '../screens/Function/FindFunctionById';
+import CreateFunction from '../screens/Function/CreateFunction';
+import UpdateFunction from '../screens/Function/UpdateFunction';
+
+//Storages
+import GetAllStorage from '../screens/Storage/GetAllStorage';
+import FindStorageById from '../screens/Storage/FindStorageById';
+import CreateStorage from '../screens/Storage/CreateStorage';
+import UpdateStorage from '../screens/Storage/UpdateStorage';
+
+//DbSQL
+import GetAllDbSQL from '../screens/DbSQL/GetAllDbSQL';
+import FindDbSQLById from '../screens/DbSQL/FindDbSQLById';
+import CreateDbSQL from '../screens/DbSQL/CreateDbSQL';
+import UpdateDbSQL from '../screens/DbSQL/UpdateDbSQL';
+
+import { colors } from '../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
+
+const CloudFunctionNavigator = createStackNavigator(
+	{
+		Function: FunctionScreen,
+		GetAll: GetAllFunctions,
+		FindById: FindFunctionById,
+		Create: CreateFunction,
+		Update: UpdateFunction,
+	},
+	{
+		headerMode: 'none',
+	}
+);
+
+const CloudStorageNavigator = createStackNavigator(
+	{
+		Storage: StorageScreen,
+		GetAll: GetAllStorage,
+		FindById: FindStorageById,
+		Create: CreateStorage,
+		Update: UpdateStorage,
+	},
+	{
+		headerMode: 'none',
+	}
+);
+
+const CloudDbSQLNavigator = createStackNavigator(
+	{
+		SQL: SqlScreen,
+		GetAll: GetAllDbSQL,
+		FindById: FindDbSQLById,
+		Create: CreateDbSQL,
+		Update: UpdateDbSQL,
+	},
+	{
+		headerMode: 'none',
+	}
+);
 
 const CategoriesNavigator = createStackNavigator({
 	Categories: CategoriesScreen,
-	Function: FunctionScreen,
+	Function: CloudFunctionNavigator,
 	VM: VMScreen,
-	SQL: SqlScreen,
-	Storage: StorageScreen,
+	SQL: CloudDbSQLNavigator,
+	Storage: CloudStorageNavigator,
 });
 
 const LoginSignupNavigator = createStackNavigator({

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 	gridItem: {
 		flex: 1,
 		margin: 15,
-		height: 300,
+		height: 200,
 		borderRadius: 10,
 		overflow: 'hidden',
 	},

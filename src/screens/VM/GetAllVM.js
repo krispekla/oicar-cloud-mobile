@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import { colors } from '../../constants/colors';
 import { FontAwesome } from '@expo/vector-icons';
@@ -197,6 +197,13 @@ const GetAllVM = props => {
 
 	return (
 		<View style={styles.screen}>
+			<Image
+				style={{ height: '100%', width: '100%', position: 'absolute' }}
+				source={{
+					uri:
+						'https://www.amaze.com.au/wp-content/uploads/2017/08/xiStock-490487412-2000x1328.jpg.pagespeed.ic.Y2hn-HvMDU.jpg',
+				}}
+			/>
 			<View style={{ margin: 10 }}>
 				<FontAwesome name="database" size={25} color="black" />
 			</View>

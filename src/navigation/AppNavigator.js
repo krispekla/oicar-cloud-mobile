@@ -106,16 +106,6 @@ const LoginSignupNavigator = createStackNavigator({
 
 const TabNavigator = createBottomTabNavigator(
 	{
-		Categories: {
-			screen: CategoriesNavigator,
-			navigationOptions: {
-				tabBarIcon: tabInfo => {
-					return (
-						<Ionicons name="ios-cloud" size={24} color={tabInfo.tintColor} />
-					);
-				},
-			},
-		},
 		LoginSignup: {
 			screen: LoginSignupNavigator,
 			navigationOptions: {
@@ -123,6 +113,16 @@ const TabNavigator = createBottomTabNavigator(
 				tabBarIcon: tabInfo => {
 					return (
 						<Ionicons name="ios-lock" size={24} color={tabInfo.tintColor} />
+					);
+				},
+			},
+		},
+		Categories: {
+			screen: CategoriesNavigator,
+			navigationOptions: {
+				tabBarIcon: tabInfo => {
+					return (
+						<Ionicons name="ios-cloud" size={24} color={tabInfo.tintColor} />
 					);
 				},
 			},

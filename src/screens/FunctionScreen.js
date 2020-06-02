@@ -1,5 +1,12 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import {
+	View,
+	Text,
+	StyleSheet,
+	FlatList,
+	SafeAreaView,
+	Image,
+} from 'react-native';
 import { colors } from '../constants/colors';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { Input, Button } from 'react-native-elements';
@@ -24,21 +31,33 @@ const FunctionScreen = props => {
 		</View>
 	);
 	return (
-		<FlatList
-			numColumns={2}
-			data={[
-				{ id: 1, title: 'GetAll', navigate: 'GetAll' },
-				{ id: 2, title: 'FindById', navigate: 'FindById' },
-				{ id: 3, title: 'Create', navigate: 'Create' },
-				{ id: 4, title: 'Update', navigate: 'Update' },
-			]}
-			renderItem={renderGridItem}
-			ListHeaderComponent={getHeader}
-		/>
+		<View style={styles.container}>
+			<Image
+				style={{ height: '100%', width: '100%', position: 'absolute' }}
+				source={{
+					uri:
+						'https://www.amaze.com.au/wp-content/uploads/2017/08/xiStock-490487412-2000x1328.jpg.pagespeed.ic.Y2hn-HvMDU.jpg',
+				}}
+			/>
+			<FlatList
+				numColumns={2}
+				data={[
+					{ id: 1, title: 'GetAll', navigate: 'GetAll' },
+					{ id: 2, title: 'FindById', navigate: 'FindById' },
+					{ id: 3, title: 'Create', navigate: 'Create' },
+					{ id: 4, title: 'Update', navigate: 'Update' },
+				]}
+				renderItem={renderGridItem}
+				ListHeaderComponent={getHeader}
+			/>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	screen: {
 		flex: 1,
 		justifyContent: 'center',

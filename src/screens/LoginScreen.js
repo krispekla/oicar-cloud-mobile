@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-
+import { colors } from '../constants/colors';
 import FormInput from '../components/FormInput/FormInput';
 import CustomButton from '../components/CustomButton/CustomButton';
+import { userUrl } from '../utils/api';
+import * as SecureStore from 'expo-secure-store';
 
 const Login = props => {
 	const [email, setEmail] = useState('');
@@ -11,36 +13,29 @@ const Login = props => {
 	const login = async () => {
 		if (!email || !password) {
 			alert('E-mail and password are required');
-		} else {
-			const config = {
+			return;
+		}
+
+		try {
+			const response = await fetch(`${userUrl}/login`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json-patch+json',
 				},
 				body: JSON.stringify({
-					email: email,
-					password: password,
+					email,
+					password,
 				}),
-			};
+			});
 
-			try {
-				const response = await fetch(
-					'http://10.0.2.2:8014/api/user/login',
-					config
-				);
+			const data = await response.json();
+			SecureStore.setItemAsync('token', data.token);
 
-				if (response.ok) {
-					const data = await response.json();
-
-					data.userId !== undefined
-						? props.navigation.navigate({ routeName: 'Calculator' })
-						: alert('Login failed');
-				} else {
-					alert(response.statusText);
-				}
-			} catch (err) {
-				alert(err);
-			}
+			data.token !== undefined
+				? props.navigation.navigate({ routeName: 'Categories' })
+				: alert('Login failed');
+		} catch (err) {
+			alert(err);
 		}
 	};
 
@@ -71,22 +66,22 @@ const Login = props => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#003f5c',
+		backgroundColor: colors.lightBlue,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	logo: {
 		fontWeight: 'bold',
 		fontSize: 50,
-		color: '#fb5b5a',
+		color: colors.white,
 		marginBottom: 40,
 	},
 	forgot: {
-		color: 'white',
+		color: colors.white,
 		fontSize: 11,
 	},
 	loginText: {
-		color: 'white',
+		color: colors.white,
 	},
 });
 

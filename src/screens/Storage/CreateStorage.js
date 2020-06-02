@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, Keyboard, Image } from 'react-native';
 import CloudStorage from '../../models/CloudStorage';
 import { Input, Button } from 'react-native-elements';
 import { colors } from '../../constants/colors';
@@ -66,6 +66,13 @@ const CreateStorage = props => {
 
 	return (
 		<View style={styles.screen}>
+			<Image
+				style={{ height: '100%', width: '100%', position: 'absolute' }}
+				source={{
+					uri:
+						'https://www.amaze.com.au/wp-content/uploads/2017/08/xiStock-490487412-2000x1328.jpg.pagespeed.ic.Y2hn-HvMDU.jpg',
+				}}
+			/>
 			{msg}
 			<View style={{ width: '70%' }}>
 				<Input

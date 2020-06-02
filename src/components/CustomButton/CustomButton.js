@@ -3,8 +3,10 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 const CustomButton = ({ press, text }) => (
-	<TouchableOpacity style={styles.customBtn} onPress={press}>
-		<Text style={styles.customText}>{text}</Text>
+	<TouchableOpacity style={styles.customBtn}>
+		<Text style={styles.customText} onPress={press}>
+			{text}
+		</Text>
 	</TouchableOpacity>
 );
 

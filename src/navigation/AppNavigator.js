@@ -36,6 +36,8 @@ import FindVMById from '../screens/VM/FindVMById';
 import CreateVM from '../screens/VM/CreateVM';
 import UpdateVM from '../screens/VM/UpdateVM';
 
+import SuggestionScreen from '../screens/Suggestion/Suggestion';
+
 import { colors } from '../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -123,6 +125,16 @@ const TabNavigator = createBottomTabNavigator(
 				tabBarIcon: tabInfo => {
 					return (
 						<Ionicons name="ios-cloud" size={24} color={tabInfo.tintColor} />
+					);
+				},
+			},
+		},
+		Suggestion: {
+			screen: SuggestionScreen,
+			navigationOptions: {
+				tabBarIcon: tabInfo => {
+					return (
+						<Ionicons name="ios-star" size={24} color={tabInfo.tintColor} />
 					);
 				},
 			},

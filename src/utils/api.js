@@ -4,8 +4,9 @@ export const fetchTest = () => {
 
 export const baseUrl = 'http://10.0.2.2:5005/api';
 
-export const functionUrl = `http://10.0.2.2:5005/api/CloudFunction`;
-export const storageUrl = `http://10.0.2.2:5005/api/CloudStorage`;
-export const sqlUrl = `http://10.0.2.2:5005/api/DbSQLCloud`;
-export const vmUrl = `http://10.0.2.2:5005/api/CloudVM`;
-export const userUrl = `http://10.0.2.2:5005/api/User`;
+export const functionUrl = `${baseUrl}/CloudFunction`;
+export const storageUrl = `${baseUrl}/CloudStorage`;
+export const sqlUrl = `h${baseUrl}/DbSQLCloud`;
+export const vmUrl = `${baseUrl}/CloudVM`;
+export const userUrl = `${baseUrl}/User`;
+export const suggestionUrl = `${baseUrl}/Statistic`;
